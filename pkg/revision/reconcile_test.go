@@ -25,7 +25,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 var ctx = context.Background()
@@ -43,10 +43,10 @@ func TestReconcileActiveRevision(t *testing.T) {
 			name: "creates IstioRevision",
 			istioValues: v1.Values{
 				Pilot: &v1.PilotConfig{
-					Hub: ptr.Of("quay.io/hub"),
+					Hub: ptr.To("quay.io/hub"),
 				},
 				MeshConfig: &v1.MeshConfig{
-					AccessLogFile: ptr.Of("/dev/stdout"),
+					AccessLogFile: ptr.To("/dev/stdout"),
 				},
 			},
 			expectOwnerReference: true,
@@ -55,15 +55,15 @@ func TestReconcileActiveRevision(t *testing.T) {
 			name: "updates IstioRevision",
 			istioValues: v1.Values{
 				Pilot: &v1.PilotConfig{
-					Hub: ptr.Of("quay.io/new-hub"),
+					Hub: ptr.To("quay.io/new-hub"),
 				},
 				MeshConfig: &v1.MeshConfig{
-					AccessLogFile: ptr.Of("/dev/stdout"),
+					AccessLogFile: ptr.To("/dev/stdout"),
 				},
 			},
 			revValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Image: ptr.Of("old-image"),
+					Image: ptr.To("old-image"),
 				},
 			},
 			expectOwnerReference: false,
@@ -95,8 +95,8 @@ func TestReconcileActiveRevision(t *testing.T) {
 				Kind:               v1.IstioKind,
 				Name:               "my-istio",
 				UID:                "my-istio-UID",
-				Controller:         ptr.Of(true),
-				BlockOwnerDeletion: ptr.Of(true),
+				Controller:         ptr.To(true),
+				BlockOwnerDeletion: ptr.To(true),
 			}
 			err := CreateOrUpdate(ctx, cl, "my-revision", version, "istio-system", &tc.istioValues, ownerRef)
 			if err != nil {

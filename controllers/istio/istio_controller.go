@@ -42,7 +42,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 // Reconciler reconciles an Istio object
@@ -141,8 +141,8 @@ func (r *Reconciler) reconcileActiveRevision(ctx context.Context, istio *v1.Isti
 			Kind:               v1.IstioKind,
 			Name:               istio.Name,
 			UID:                istio.UID,
-			Controller:         ptr.Of(true),
-			BlockOwnerDeletion: ptr.Of(true),
+			Controller:         ptr.To(true),
+			BlockOwnerDeletion: ptr.To(true),
 		})
 }
 

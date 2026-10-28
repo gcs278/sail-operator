@@ -33,7 +33,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 var _ = Describe("base chart support", Ordered, func() {
@@ -89,9 +89,9 @@ var _ = Describe("base chart support", Ordered, func() {
 					Namespace: istioNamespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
-						Revision: ptr.Of(""),
+						Revision: ptr.To(""),
 					},
 				},
 			}
@@ -146,9 +146,9 @@ var _ = Describe("base chart support", Ordered, func() {
 					Namespace: istioNamespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
-						Revision: ptr.Of("my-rev"),
+						Revision: ptr.To("my-rev"),
 					},
 				},
 			}
@@ -192,9 +192,9 @@ var _ = Describe("base chart support", Ordered, func() {
 					Namespace: istioNamespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
-						Revision: ptr.Of(""),
+						Revision: ptr.To(""),
 					},
 				},
 			}
@@ -253,7 +253,7 @@ var _ = Describe("base chart support", Ordered, func() {
 				}, func(obj client.Object) {
 					webhook := obj.(*admissionv1.ValidatingWebhookConfiguration)
 					webhook.Webhooks[0].Name = "xyz.xyz.xyz"
-					webhook.Webhooks[0].FailurePolicy = ptr.Of(admissionv1.Fail)
+					webhook.Webhooks[0].FailurePolicy = ptr.To(admissionv1.Fail)
 				}, func(g Gomega, obj client.Object) {
 					webhook := obj.(*admissionv1.ValidatingWebhookConfiguration)
 					g.Expect(webhook.Webhooks[0].Name).ToNot(Equal("xyz.xyz.xyz"))
@@ -308,9 +308,9 @@ var _ = Describe("base chart support", Ordered, func() {
 					Namespace: ns1,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(ns1),
+							IstioNamespace: ptr.To(ns1),
 						},
-						Revision: ptr.Of("rev1"),
+						Revision: ptr.To("rev1"),
 					},
 				},
 			}
@@ -344,9 +344,9 @@ var _ = Describe("base chart support", Ordered, func() {
 					Namespace: ns1,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(ns1),
+							IstioNamespace: ptr.To(ns1),
 						},
-						Revision: ptr.Of("rev2"),
+						Revision: ptr.To("rev2"),
 					},
 				},
 			}
@@ -383,9 +383,9 @@ var _ = Describe("base chart support", Ordered, func() {
 					Namespace: ns2,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(ns2),
+							IstioNamespace: ptr.To(ns2),
 						},
-						Revision: ptr.Of("rev3"),
+						Revision: ptr.To("rev3"),
 					},
 				},
 			}

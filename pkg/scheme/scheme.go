@@ -21,8 +21,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
-
-	networkingv1alpha3 "istio.io/client-go/pkg/apis/networking/v1alpha3"
 )
 
 var Scheme = runtime.NewScheme()
@@ -30,7 +28,6 @@ var Scheme = runtime.NewScheme()
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(Scheme))
 	utilruntime.Must(multusv1.AddToScheme(Scheme))
-	utilruntime.Must(networkingv1alpha3.AddToScheme(Scheme))
 
 	utilruntime.Must(v1alpha1.AddToScheme(Scheme))
 	utilruntime.Must(v1.AddToScheme(Scheme))

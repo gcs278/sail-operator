@@ -40,7 +40,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/rand"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func() {
@@ -97,9 +97,9 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Version:   istioversion.Default,
 					Namespace: istioNamespace,
 					Values: &v1.Values{
-						Revision: ptr.Of(revName),
+						Revision: ptr.To(revName),
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of("wrong-namespace"),
+							IstioNamespace: ptr.To("wrong-namespace"),
 						},
 					},
 				},
@@ -116,9 +116,9 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Version:   istioversion.Default,
 					Namespace: istioNamespace,
 					Values: &v1.Values{
-						Revision: ptr.Of("is-not-" + revName),
+						Revision: ptr.To("is-not-" + revName),
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
 					},
 				},
@@ -135,9 +135,9 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Version:   istioversion.Default,
 					Namespace: istioNamespace,
 					Values: &v1.Values{
-						Revision: ptr.Of("default"), // this must be rejected, because revision needs to be '' when metadata.name is 'default'
+						Revision: ptr.To("default"), // this must be rejected, because revision needs to be '' when metadata.name is 'default'
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
 					},
 				},
@@ -154,9 +154,9 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Version:   istioversion.Default,
 					Namespace: istioNamespace,
 					Values: &v1.Values{
-						Revision: ptr.Of(""),
+						Revision: ptr.To(""),
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
 					},
 				},
@@ -185,10 +185,10 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Version:   istioversion.Default,
 					Namespace: istioNamespace,
 					Values: &v1.Values{
-						Revision: ptr.Of(revName),
+						Revision: ptr.To(revName),
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
-							Platform:       ptr.Of(string(config.PlatformOpenShift)),
+							IstioNamespace: ptr.To(istioNamespace),
+							Platform:       ptr.To(string(config.PlatformOpenShift)),
 						},
 					},
 				},
@@ -275,10 +275,10 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Version:   istioversion.Default,
 					Namespace: istioNamespace,
 					Values: &v1.Values{
-						Revision: ptr.Of(revName),
-						Profile:  ptr.Of("ambient"),
+						Revision: ptr.To(revName),
+						Profile:  ptr.To("ambient"),
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
 					},
 				},
@@ -337,7 +337,7 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 						Version:   istioversion.Default,
 						Namespace: nsName,
 						Values: &v1.Values{
-							Revision: ptr.Of(revName),
+							Revision: ptr.To(revName),
 							Global: &v1.GlobalConfig{
 								IstioNamespace: &nsName,
 							},
@@ -398,11 +398,11 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 						Namespace: istioNamespace,
 						Values: &v1.Values{
 							Global: &v1.GlobalConfig{
-								IstioNamespace: ptr.Of(istioNamespace),
+								IstioNamespace: ptr.To(istioNamespace),
 							},
-							Revision: ptr.Of(revName),
+							Revision: ptr.To(revName),
 							Pilot: &v1.PilotConfig{
-								Image: ptr.Of(pilotImage),
+								Image: ptr.To(pilotImage),
 							},
 						},
 					},
@@ -441,11 +441,11 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Namespace: istioNamespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
-						Revision: ptr.Of(revName),
+						Revision: ptr.To(revName),
 						Pilot: &v1.PilotConfig{
-							Image: ptr.Of(pilotImage),
+							Image: ptr.To(pilotImage),
 						},
 					},
 				},
@@ -495,12 +495,12 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Namespace: istioNamespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
-						Revision: ptr.Of(revName),
+						Revision: ptr.To(revName),
 						Pilot: &v1.PilotConfig{
-							Image:        ptr.Of(pilotImage),
-							AutoscaleMin: ptr.Of(uint32(2)),
+							Image:        ptr.To(pilotImage),
+							AutoscaleMin: ptr.To(uint32(2)),
 						},
 					},
 				},
@@ -584,7 +584,7 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 				}, func(obj client.Object) {
 					webhook := obj.(*admissionv1.ValidatingWebhookConfiguration)
 					webhook.Webhooks[0].Name = "xyz.xyz.xyz"
-					webhook.Webhooks[0].FailurePolicy = ptr.Of(admissionv1.Fail)
+					webhook.Webhooks[0].FailurePolicy = ptr.To(admissionv1.Fail)
 				}, func(g Gomega, obj client.Object) {
 					webhook := obj.(*admissionv1.ValidatingWebhookConfiguration)
 					g.Expect(webhook.Webhooks[0].Name).ToNot(Equal("xyz.xyz.xyz"))
@@ -695,7 +695,7 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 				By("updating caBundle and failurePolicy on MutatingWebhookConfiguration")
 				for i := range webhook.Webhooks {
 					webhook.Webhooks[i].ClientConfig.CABundle = []byte("new-ca-bundle-data")
-					webhook.Webhooks[i].FailurePolicy = ptr.Of(admissionv1.Fail)
+					webhook.Webhooks[i].FailurePolicy = ptr.To(admissionv1.Fail)
 				}
 				Expect(k8sClient.Update(ctx, webhook)).To(Succeed())
 			})
@@ -715,7 +715,7 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 				By("updating caBundle and failurePolicy on ValidatingWebhookConfiguration")
 				for i := range webhook.Webhooks {
 					webhook.Webhooks[i].ClientConfig.CABundle = []byte("new-ca-bundle-data")
-					webhook.Webhooks[i].FailurePolicy = ptr.Of(admissionv1.Fail)
+					webhook.Webhooks[i].FailurePolicy = ptr.To(admissionv1.Fail)
 				}
 				Expect(k8sClient.Update(ctx, webhook)).To(Succeed())
 			})
@@ -734,7 +734,7 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 						Namespace: istioNamespace,
 						Values: &v1.Values{
 							Global: &v1.GlobalConfig{
-								IstioNamespace: ptr.Of(istioNamespace),
+								IstioNamespace: ptr.To(istioNamespace),
 							},
 							Revision: &revision,
 						},
@@ -814,11 +814,11 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Namespace: istioNamespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
-						Revision: ptr.Of(revName),
+						Revision: ptr.To(revName),
 						Pilot: &v1.PilotConfig{
-							Image: ptr.Of(pilotImage),
+							Image: ptr.To(pilotImage),
 						},
 					},
 				},
@@ -845,11 +845,11 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Namespace: istioNamespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
 						Revision: &rev2Key.Name,
 						Pilot: &v1.PilotConfig{
-							Image: ptr.Of(pilotImage),
+							Image: ptr.To(pilotImage),
 						},
 					},
 				},
@@ -964,7 +964,7 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Version:   istioversion.Base,
 					Namespace: istioNamespace,
 					Values: &v1.Values{
-						Revision: ptr.Of("something-else"),
+						Revision: ptr.To("something-else"),
 						Global: &v1.GlobalConfig{
 							IstioNamespace: &istioNamespace,
 						},
@@ -996,11 +996,11 @@ var _ = Describe("IstioRevision resource", Label("istiorevision"), Ordered, func
 					Namespace: istioNamespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of(istioNamespace),
+							IstioNamespace: ptr.To(istioNamespace),
 						},
-						Revision: ptr.Of(revName),
+						Revision: ptr.To(revName),
 						Pilot: &v1.PilotConfig{
-							Image: ptr.Of(pilotImage),
+							Image: ptr.To(pilotImage),
 						},
 						GatewayClasses: []byte(`{"istio":{"service":{"spec":{"type":"ClusterIP"}}}}`),
 					},

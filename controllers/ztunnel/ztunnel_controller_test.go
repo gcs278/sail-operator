@@ -35,7 +35,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/client/interceptor"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 const (
@@ -361,14 +361,14 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: "v1.24.0",
 					Values: &v1.ZTunnelValues{
 						ZTunnel: &v1.ZTunnelConfig{
-							Image: ptr.Of("ztunnel-test"),
+							Image: ptr.To("ztunnel-test"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.ZTunnelValues{
 				ZTunnel: &v1.ZTunnelConfig{
-					Image: ptr.Of("ztunnel-test"),
+					Image: ptr.To("ztunnel-test"),
 				},
 			},
 		},
@@ -389,7 +389,7 @@ func TestApplyImageDigests(t *testing.T) {
 			},
 			expectValues: &v1.ZTunnelValues{
 				ZTunnel: &v1.ZTunnelConfig{
-					Image: ptr.Of("ztunnel-test"),
+					Image: ptr.To("ztunnel-test"),
 				},
 			},
 		},
@@ -407,14 +407,14 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: "v1.24.0",
 					Values: &v1.ZTunnelValues{
 						ZTunnel: &v1.ZTunnelConfig{
-							Image: ptr.Of("ztunnel-custom"),
+							Image: ptr.To("ztunnel-custom"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.ZTunnelValues{
 				ZTunnel: &v1.ZTunnelConfig{
-					Image: ptr.Of("ztunnel-custom"),
+					Image: ptr.To("ztunnel-custom"),
 				},
 			},
 		},
@@ -432,16 +432,16 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: "v1.24.0",
 					Values: &v1.ZTunnelValues{
 						ZTunnel: &v1.ZTunnelConfig{
-							Hub: ptr.Of("docker.io/istio"),
-							Tag: ptr.Of("1.24.0"),
+							Hub: ptr.To("docker.io/istio"),
+							Tag: ptr.To("1.24.0"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.ZTunnelValues{
 				ZTunnel: &v1.ZTunnelConfig{
-					Hub: ptr.Of("docker.io/istio"),
-					Tag: ptr.Of("1.24.0"),
+					Hub: ptr.To("docker.io/istio"),
+					Tag: ptr.To("1.24.0"),
 				},
 			},
 		},
@@ -459,14 +459,14 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: "v1.24.0",
 					Values: &v1.ZTunnelValues{
 						Global: &v1.ZTunnelGlobalConfig{
-							Hub: ptr.Of("docker.io/istio"),
+							Hub: ptr.To("docker.io/istio"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.ZTunnelValues{
 				Global: &v1.ZTunnelGlobalConfig{
-					Hub: ptr.Of("docker.io/istio"),
+					Hub: ptr.To("docker.io/istio"),
 				},
 			},
 		},
@@ -484,14 +484,14 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: "v1.24.0",
 					Values: &v1.ZTunnelValues{
 						Global: &v1.ZTunnelGlobalConfig{
-							Tag: ptr.Of("v1.24.0-custom-build"),
+							Tag: ptr.To("v1.24.0-custom-build"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.ZTunnelValues{
 				Global: &v1.ZTunnelGlobalConfig{
-					Tag: ptr.Of("v1.24.0-custom-build"),
+					Tag: ptr.To("v1.24.0-custom-build"),
 				},
 			},
 		},
@@ -509,16 +509,16 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: "v1.24.1",
 					Values: &v1.ZTunnelValues{
 						ZTunnel: &v1.ZTunnelConfig{
-							Hub: ptr.Of("docker.io/istio"),
-							Tag: ptr.Of("1.24.1"),
+							Hub: ptr.To("docker.io/istio"),
+							Tag: ptr.To("1.24.1"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.ZTunnelValues{
 				ZTunnel: &v1.ZTunnelConfig{
-					Hub: ptr.Of("docker.io/istio"),
-					Tag: ptr.Of("1.24.1"),
+					Hub: ptr.To("docker.io/istio"),
+					Tag: ptr.To("1.24.1"),
 				},
 			},
 		},

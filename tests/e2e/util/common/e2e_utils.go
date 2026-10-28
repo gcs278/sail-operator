@@ -36,7 +36,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 type testSuite string
@@ -187,7 +187,7 @@ func logOperatorDebugInfo(k kubectl.Kubectl) {
 	operator, err := k.GetYAML("deployment", deploymentName)
 	logDebugElement("=====Operator Deployment YAML=====", operator, err)
 
-	logs, err := k.Logs("deploy/"+deploymentName, ptr.Of(120*time.Second))
+	logs, err := k.Logs("deploy/"+deploymentName, ptr.To(120*time.Second))
 	logDebugElement("=====Operator logs=====", logs, err)
 
 	events, err := k.GetEvents()
@@ -208,7 +208,7 @@ func logIstioDebugInfo(k kubectl.Kubectl) {
 	output, err := k.WithNamespace(ControlPlaneNamespace).GetPods("", "-o wide")
 	logDebugElement("=====Pods in "+ControlPlaneNamespace+"=====", output, err)
 
-	logs, err := k.WithNamespace(ControlPlaneNamespace).Logs("deploy/istiod", ptr.Of(120*time.Second))
+	logs, err := k.WithNamespace(ControlPlaneNamespace).Logs("deploy/istiod", ptr.To(120*time.Second))
 	logDebugElement("=====Istiod logs=====", logs, err)
 
 	events, err := k.WithNamespace(ControlPlaneNamespace).GetEvents()
@@ -236,7 +236,7 @@ func logCNIDebugInfo(k kubectl.Kubectl) {
 	describe, err := k.WithNamespace(IstioCniNamespace).Describe("daemonset", "istio-cni-node")
 	logDebugElement("=====Istio CNI DaemonSet describe=====", describe, err)
 
-	logs, err := k.WithNamespace(IstioCniNamespace).Logs("daemonset/istio-cni-node", ptr.Of(120*time.Second))
+	logs, err := k.WithNamespace(IstioCniNamespace).Logs("daemonset/istio-cni-node", ptr.To(120*time.Second))
 	logDebugElement("=====Istio CNI logs=====", logs, err)
 }
 
@@ -253,7 +253,7 @@ func logZtunnelDebugInfo(k kubectl.Kubectl) {
 	describe, err := k.WithNamespace(ZtunnelNamespace).Describe("daemonset", "ztunnel")
 	logDebugElement("=====ZTunnel DaemonSet describe=====", describe, err)
 
-	logs, err := k.WithNamespace(ZtunnelNamespace).Logs("daemonset/ztunnel", ptr.Of(120*time.Second))
+	logs, err := k.WithNamespace(ZtunnelNamespace).Logs("daemonset/ztunnel", ptr.To(120*time.Second))
 	logDebugElement("=====ztunnel logs=====", logs, err)
 }
 

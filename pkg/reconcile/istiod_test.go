@@ -26,7 +26,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 func TestIstiodReconciler_Validate(t *testing.T) {
@@ -78,7 +78,7 @@ func TestIstiodReconciler_Validate(t *testing.T) {
 			namespace: "istio-system",
 			values: &v1.Values{
 				Global: &v1.GlobalConfig{
-					IstioNamespace: ptr.Of("istio-system"),
+					IstioNamespace: ptr.To("istio-system"),
 				},
 			},
 			nsExists:    false,
@@ -91,7 +91,7 @@ func TestIstiodReconciler_Validate(t *testing.T) {
 			namespace: "istio-system",
 			values: &v1.Values{
 				Global: &v1.GlobalConfig{
-					IstioNamespace: ptr.Of("istio-system"),
+					IstioNamespace: ptr.To("istio-system"),
 				},
 			},
 			nsExists: true,

@@ -27,7 +27,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 func TestCNIReconciler_Validate(t *testing.T) {
@@ -130,7 +130,7 @@ func TestApplyCNIImageDigests(t *testing.T) {
 			},
 			expected: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					Image: ptr.Of("istio/cni@sha256:abc123"),
+					Image: ptr.To("istio/cni@sha256:abc123"),
 				},
 			},
 		},
@@ -139,7 +139,7 @@ func TestApplyCNIImageDigests(t *testing.T) {
 			version: "v1.24.0",
 			values: &v1.CNIValues{
 				Global: &v1.CNIGlobalConfig{
-					Hub: ptr.Of("my-registry.io"),
+					Hub: ptr.To("my-registry.io"),
 				},
 			},
 			config: config.OperatorConfig{
@@ -149,7 +149,7 @@ func TestApplyCNIImageDigests(t *testing.T) {
 			},
 			expected: &v1.CNIValues{
 				Global: &v1.CNIGlobalConfig{
-					Hub: ptr.Of("my-registry.io"),
+					Hub: ptr.To("my-registry.io"),
 				},
 			},
 		},
@@ -158,7 +158,7 @@ func TestApplyCNIImageDigests(t *testing.T) {
 			version: "v1.24.0",
 			values: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					Image: ptr.Of("my-custom-image"),
+					Image: ptr.To("my-custom-image"),
 				},
 			},
 			config: config.OperatorConfig{
@@ -168,7 +168,7 @@ func TestApplyCNIImageDigests(t *testing.T) {
 			},
 			expected: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					Image: ptr.Of("my-custom-image"),
+					Image: ptr.To("my-custom-image"),
 				},
 			},
 		},

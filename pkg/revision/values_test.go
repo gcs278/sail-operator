@@ -24,7 +24,7 @@ import (
 	"github.com/istio-ecosystem/sail-operator/pkg/config"
 	"github.com/istio-ecosystem/sail-operator/pkg/istiovalues"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 // TestComputeValues tests that the values are sourced from the following sources
@@ -64,7 +64,7 @@ spec:
 
 	values := &v1.Values{
 		Pilot: &v1.PilotConfig{
-			Image: ptr.Of("from-istio-spec-values"),
+			Image: ptr.To("from-istio-spec-values"),
 		},
 	}
 
@@ -75,16 +75,16 @@ spec:
 
 	expected := &v1.Values{
 		Pilot: &v1.PilotConfig{
-			Hub:   ptr.Of("from-default-profile"),
-			Tag:   ptr.Of("from-my-profile"),
-			Image: ptr.Of("from-istio-spec-values"),
+			Hub:   ptr.To("from-default-profile"),
+			Tag:   ptr.To("from-my-profile"),
+			Image: ptr.To("from-istio-spec-values"),
 		},
 		Global: &v1.GlobalConfig{
-			Platform:       ptr.Of("openshift"),
-			IstioNamespace: ptr.Of(namespace), // this value is always added/overridden based on IstioRevision.spec.namespace
+			Platform:       ptr.To("openshift"),
+			IstioNamespace: ptr.To(namespace), // this value is always added/overridden based on IstioRevision.spec.namespace
 		},
-		Revision:        ptr.Of(revisionName),
-		DefaultRevision: ptr.Of(""),
+		Revision:        ptr.To(revisionName),
+		DefaultRevision: ptr.To(""),
 	}
 
 	if !reflect.DeepEqual(result, expected) {
@@ -123,11 +123,11 @@ spec:`)), 0o644))
 			Env: map[string]string{"COMPLIANCE_POLICY": "fips-140-2"},
 		},
 		Global: &v1.GlobalConfig{
-			Platform:       ptr.Of("openshift"),
-			IstioNamespace: ptr.Of(namespace), // this value is always added/overridden based on IstioRevision.spec.namespace
+			Platform:       ptr.To("openshift"),
+			IstioNamespace: ptr.To(namespace), // this value is always added/overridden based on IstioRevision.spec.namespace
 		},
-		Revision:        ptr.Of(revisionName),
-		DefaultRevision: ptr.Of(""),
+		Revision:        ptr.To(revisionName),
+		DefaultRevision: ptr.To(""),
 	}
 
 	if !reflect.DeepEqual(result, expected) {

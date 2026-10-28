@@ -20,7 +20,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	v1 "github.com/istio-ecosystem/sail-operator/api/v1"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 func TestApplyOverrides(t *testing.T) {
@@ -37,11 +37,11 @@ func TestApplyOverrides(t *testing.T) {
 			namespace: "ns1",
 			values:    v1.Values{},
 			expectedValues: v1.Values{
-				Revision: ptr.Of(""),
+				Revision: ptr.To(""),
 				Global: &v1.GlobalConfig{
-					IstioNamespace: ptr.Of("ns1"),
+					IstioNamespace: ptr.To("ns1"),
 				},
-				DefaultRevision: ptr.Of(""),
+				DefaultRevision: ptr.To(""),
 			},
 		},
 		{
@@ -50,11 +50,11 @@ func TestApplyOverrides(t *testing.T) {
 			namespace: "ns1",
 			values:    v1.Values{},
 			expectedValues: v1.Values{
-				Revision: ptr.Of("my-revision"),
+				Revision: ptr.To("my-revision"),
 				Global: &v1.GlobalConfig{
-					IstioNamespace: ptr.Of("ns1"),
+					IstioNamespace: ptr.To("ns1"),
 				},
-				DefaultRevision: ptr.Of(""),
+				DefaultRevision: ptr.To(""),
 			},
 		},
 		{
@@ -62,14 +62,14 @@ func TestApplyOverrides(t *testing.T) {
 			revision:  "my-revision",
 			namespace: "ns1",
 			values: v1.Values{
-				Revision: ptr.Of("this-should-be-overridden"),
+				Revision: ptr.To("this-should-be-overridden"),
 			},
 			expectedValues: v1.Values{
-				Revision: ptr.Of("my-revision"),
+				Revision: ptr.To("my-revision"),
 				Global: &v1.GlobalConfig{
-					IstioNamespace: ptr.Of("ns1"),
+					IstioNamespace: ptr.To("ns1"),
 				},
-				DefaultRevision: ptr.Of(""),
+				DefaultRevision: ptr.To(""),
 			},
 		},
 		{
@@ -78,15 +78,15 @@ func TestApplyOverrides(t *testing.T) {
 			namespace: "ns1",
 			values: v1.Values{
 				Global: &v1.GlobalConfig{
-					IstioNamespace: ptr.Of("this-should-be-overridden"),
+					IstioNamespace: ptr.To("this-should-be-overridden"),
 				},
 			},
 			expectedValues: v1.Values{
-				Revision: ptr.Of("my-revision"),
+				Revision: ptr.To("my-revision"),
 				Global: &v1.GlobalConfig{
-					IstioNamespace: ptr.Of("ns1"),
+					IstioNamespace: ptr.To("ns1"),
 				},
-				DefaultRevision: ptr.Of(""),
+				DefaultRevision: ptr.To(""),
 			},
 		},
 		{
@@ -94,14 +94,14 @@ func TestApplyOverrides(t *testing.T) {
 			revision:  "my-revision",
 			namespace: "ns1",
 			values: v1.Values{
-				DefaultRevision: ptr.Of("my-revision"),
+				DefaultRevision: ptr.To("my-revision"),
 			},
 			expectedValues: v1.Values{
-				Revision: ptr.Of("my-revision"),
+				Revision: ptr.To("my-revision"),
 				Global: &v1.GlobalConfig{
-					IstioNamespace: ptr.Of("ns1"),
+					IstioNamespace: ptr.To("ns1"),
 				},
-				DefaultRevision: ptr.Of(""),
+				DefaultRevision: ptr.To(""),
 			},
 		},
 	}

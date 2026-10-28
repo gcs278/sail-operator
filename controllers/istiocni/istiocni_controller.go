@@ -47,7 +47,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 // Reconciler reconciles an IstioCNI object
@@ -117,8 +117,8 @@ func (r *Reconciler) doReconcile(ctx context.Context, cni *v1.IstioCNI) error {
 		Kind:               v1.IstioCNIKind,
 		Name:               cni.Name,
 		UID:                cni.UID,
-		Controller:         ptr.Of(true),
-		BlockOwnerDeletion: ptr.Of(true),
+		Controller:         ptr.To(true),
+		BlockOwnerDeletion: ptr.To(true),
 	}
 	return cniReconciler.Install(ctx, cni.Spec.Version, cni.Spec.Namespace, cni.Spec.Values, cni.Spec.Profile, &ownerReference)
 }

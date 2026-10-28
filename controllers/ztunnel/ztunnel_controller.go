@@ -47,7 +47,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 // Reconciler reconciles the ZTunnel object
@@ -111,8 +111,8 @@ func (r *Reconciler) doReconcile(ctx context.Context, ztunnel *v1.ZTunnel) error
 		Kind:               v1.ZTunnelKind,
 		Name:               ztunnel.Name,
 		UID:                ztunnel.UID,
-		Controller:         ptr.Of(true),
-		BlockOwnerDeletion: ptr.Of(true),
+		Controller:         ptr.To(true),
+		BlockOwnerDeletion: ptr.To(true),
 	}
 	return ztunnelReconciler.Install(ctx, ztunnel.Spec.Version, ztunnel.Spec.Namespace, ztunnel.Spec.Values, &ownerReference)
 }

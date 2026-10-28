@@ -55,7 +55,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 const (
@@ -135,8 +135,8 @@ func (r *Reconciler) doReconcile(ctx context.Context, rev *v1.IstioRevision) err
 		Kind:               v1.IstioRevisionKind,
 		Name:               rev.Name,
 		UID:                rev.UID,
-		Controller:         ptr.Of(true),
-		BlockOwnerDeletion: ptr.Of(true),
+		Controller:         ptr.To(true),
+		BlockOwnerDeletion: ptr.To(true),
 	}
 	return istiodReconciler.Install(ctx, rev.Spec.Version, rev.Spec.Namespace, rev.Spec.Values, rev.Name, &ownerReference)
 }

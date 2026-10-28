@@ -40,7 +40,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/event"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 func TestValidate(t *testing.T) {
@@ -69,7 +69,7 @@ func TestValidate(t *testing.T) {
 					Namespace: "istio-system",
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of("istio-system"),
+							IstioNamespace: ptr.To("istio-system"),
 						},
 					},
 				},
@@ -114,7 +114,7 @@ func TestValidate(t *testing.T) {
 					Namespace: "istio-system",
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of("istio-system"),
+							IstioNamespace: ptr.To("istio-system"),
 						},
 					},
 				},
@@ -147,7 +147,7 @@ func TestValidate(t *testing.T) {
 					Namespace: "istio-system",
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of("other-namespace"),
+							IstioNamespace: ptr.To("other-namespace"),
 						},
 					},
 				},
@@ -165,9 +165,9 @@ func TestValidate(t *testing.T) {
 					Version:   istioversion.Default,
 					Namespace: "istio-system",
 					Values: &v1.Values{
-						Revision: ptr.Of("my-revision"),
+						Revision: ptr.To("my-revision"),
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of("other-namespace"),
+							IstioNamespace: ptr.To("other-namespace"),
 						},
 					},
 				},
@@ -185,9 +185,9 @@ func TestValidate(t *testing.T) {
 					Version:   istioversion.Default,
 					Namespace: "istio-system",
 					Values: &v1.Values{
-						Revision: ptr.Of("other-revision"),
+						Revision: ptr.To("other-revision"),
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of("other-namespace"),
+							IstioNamespace: ptr.To("other-namespace"),
 						},
 					},
 				},
@@ -246,7 +246,7 @@ func TestMapEndpointSliceToReconcileRequests(t *testing.T) {
 							APIVersion: v1.GroupVersion.String(),
 							Kind:       v1.IstioRevisionKind,
 							Name:       "direct-istiorevision-owner",
-							Controller: ptr.Of(true),
+							Controller: ptr.To(true),
 						},
 					},
 				},
@@ -265,7 +265,7 @@ func TestMapEndpointSliceToReconcileRequests(t *testing.T) {
 							APIVersion: corev1.SchemeGroupVersion.String(),
 							Kind:       "Endpoints",
 							Name:       "endpoints-owner",
-							Controller: ptr.Of(true),
+							Controller: ptr.To(true),
 						},
 					},
 				},
@@ -281,7 +281,7 @@ func TestMapEndpointSliceToReconcileRequests(t *testing.T) {
 								APIVersion: v1.GroupVersion.String(),
 								Kind:       v1.IstioRevisionKind,
 								Name:       "indirect-istiorevision-owner",
-								Controller: ptr.Of(true),
+								Controller: ptr.To(true),
 							},
 						},
 					},
@@ -299,7 +299,7 @@ func TestMapEndpointSliceToReconcileRequests(t *testing.T) {
 							APIVersion: v1.GroupVersion.String(),
 							Kind:       "SomeOtherKind",
 							Name:       "not-istiorevision-owner",
-							Controller: ptr.Of(true),
+							Controller: ptr.To(true),
 						},
 					},
 				},
@@ -314,7 +314,7 @@ func TestMapEndpointSliceToReconcileRequests(t *testing.T) {
 							APIVersion: v1.GroupVersion.String(),
 							Kind:       v1.IstioRevisionKind,
 							Name:       "not-controller-owner",
-							Controller: ptr.Of(false),
+							Controller: ptr.To(false),
 						},
 					},
 				},
@@ -331,7 +331,7 @@ func TestMapEndpointSliceToReconcileRequests(t *testing.T) {
 							APIVersion: corev1.SchemeGroupVersion.String(),
 							Kind:       "Endpoints",
 							Name:       "endpoints-owner",
-							Controller: ptr.Of(true),
+							Controller: ptr.To(true),
 						},
 					},
 				},
@@ -347,7 +347,7 @@ func TestMapEndpointSliceToReconcileRequests(t *testing.T) {
 								APIVersion: "some-other-group-version",
 								Kind:       "some-other-group-kind",
 								Name:       "indirect-istiorevision-owner",
-								Controller: ptr.Of(true),
+								Controller: ptr.To(true),
 							},
 						},
 					},
@@ -365,7 +365,7 @@ func TestMapEndpointSliceToReconcileRequests(t *testing.T) {
 							APIVersion: corev1.SchemeGroupVersion.String(),
 							Kind:       "Endpoints",
 							Name:       "endpoints-owner-does-not-exist",
-							Controller: ptr.Of(true),
+							Controller: ptr.To(true),
 						},
 					},
 				},
@@ -559,7 +559,7 @@ func TestDetermineReadyCondition(t *testing.T) {
 		{
 			name: "Non-default revision",
 			values: &v1.Values{
-				Revision: ptr.Of("my-revision"),
+				Revision: ptr.To("my-revision"),
 			},
 			clientObjects: []client.Object{
 				&appsv1.Deployment{
@@ -597,7 +597,7 @@ func TestDetermineReadyCondition(t *testing.T) {
 		},
 		{
 			name:   "Istiod-remote ready",
-			values: &v1.Values{Profile: ptr.Of("remote")},
+			values: &v1.Values{Profile: ptr.To("remote")},
 			clientObjects: []client.Object{
 				&admissionv1.MutatingWebhookConfiguration{
 					ObjectMeta: metav1.ObjectMeta{
@@ -615,7 +615,7 @@ func TestDetermineReadyCondition(t *testing.T) {
 		},
 		{
 			name:   "Istiod-remote not ready",
-			values: &v1.Values{Profile: ptr.Of("remote")},
+			values: &v1.Values{Profile: ptr.To("remote")},
 			clientObjects: []client.Object{
 				&admissionv1.MutatingWebhookConfiguration{
 					ObjectMeta: metav1.ObjectMeta{
@@ -635,7 +635,7 @@ func TestDetermineReadyCondition(t *testing.T) {
 		},
 		{
 			name:   "Istiod-remote no readiness probe status annotation",
-			values: &v1.Values{Profile: ptr.Of("remote")},
+			values: &v1.Values{Profile: ptr.To("remote")},
 			clientObjects: []client.Object{
 				&admissionv1.MutatingWebhookConfiguration{
 					ObjectMeta: metav1.ObjectMeta{
@@ -653,7 +653,7 @@ func TestDetermineReadyCondition(t *testing.T) {
 		},
 		{
 			name:          "Istiod-remote webhook config not found",
-			values:        &v1.Values{Profile: ptr.Of("remote")},
+			values:        &v1.Values{Profile: ptr.To("remote")},
 			clientObjects: []client.Object{},
 			expected: v1.IstioRevisionCondition{
 				Type:    v1.IstioRevisionConditionReady,
@@ -664,7 +664,7 @@ func TestDetermineReadyCondition(t *testing.T) {
 		},
 		{
 			name:          "Istiod-remote client error on get",
-			values:        &v1.Values{Profile: ptr.Of("remote")},
+			values:        &v1.Values{Profile: ptr.To("remote")},
 			clientObjects: []client.Object{},
 			interceptors: interceptor.Funcs{
 				Get: func(_ context.Context, _ client.WithWatch, _ client.ObjectKey, obj client.Object, _ ...client.GetOption) error {
@@ -897,7 +897,7 @@ func TestDetermineInUseCondition(t *testing.T) {
 				if tc.enableAllNamespaces {
 					rev.Spec.Values = &v1.Values{
 						SidecarInjectorWebhook: &v1.SidecarInjectorConfig{
-							EnableNamespacesByDefault: ptr.Of(true),
+							EnableNamespacesByDefault: ptr.To(true),
 						},
 					}
 				}

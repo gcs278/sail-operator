@@ -22,7 +22,7 @@ import (
 	"github.com/istio-ecosystem/sail-operator/pkg/config"
 	"github.com/stretchr/testify/assert"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 // mockComputeValues returns the input values without any computation
@@ -40,7 +40,7 @@ func mockComputeValues(values *v1.Values, _, _ string, platform config.Platform,
 		if values.Pilot.Cni == nil {
 			values.Pilot.Cni = &v1.CNIUsageConfig{}
 		}
-		values.Pilot.Cni.Enabled = ptr.Of(true)
+		values.Pilot.Cni.Enabled = ptr.To(true)
 	}
 
 	profile := userProfile
@@ -50,7 +50,7 @@ func mockComputeValues(values *v1.Values, _, _ string, platform config.Platform,
 
 	// If profile is ambient, set the profile in values and enable PILOT_ENABLE_AMBIENT
 	if profile == "ambient" {
-		values.Profile = ptr.Of("ambient")
+		values.Profile = ptr.To("ambient")
 		if values.Pilot == nil {
 			values.Pilot = &v1.PilotConfig{}
 		}
@@ -148,7 +148,7 @@ func TestDependsOnIstioCNI(t *testing.T) {
 					Values: &v1.Values{
 						Pilot: &v1.PilotConfig{
 							Cni: &v1.CNIUsageConfig{
-								Enabled: ptr.Of(true),
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -164,7 +164,7 @@ func TestDependsOnIstioCNI(t *testing.T) {
 					Values: &v1.Values{
 						Pilot: &v1.PilotConfig{
 							Cni: &v1.CNIUsageConfig{
-								Enabled: ptr.Of(false),
+								Enabled: ptr.To(false),
 							},
 						},
 					},
@@ -179,11 +179,11 @@ func TestDependsOnIstioCNI(t *testing.T) {
 				Spec: v1.IstioRevisionSpec{
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							Platform: ptr.Of("openshift"),
+							Platform: ptr.To("openshift"),
 						},
 						Pilot: &v1.PilotConfig{
 							Cni: &v1.CNIUsageConfig{
-								Enabled: ptr.Of(false),
+								Enabled: ptr.To(false),
 							},
 						},
 					},
@@ -200,11 +200,11 @@ func TestDependsOnIstioCNI(t *testing.T) {
 				Spec: v1.IstioRevisionSpec{
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							Platform: ptr.Of("openshift"),
+							Platform: ptr.To("openshift"),
 						},
 						Pilot: &v1.PilotConfig{
 							Cni: &v1.CNIUsageConfig{
-								Enabled: ptr.Of(true),
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -221,7 +221,7 @@ func TestDependsOnIstioCNI(t *testing.T) {
 				Spec: v1.IstioRevisionSpec{
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							Platform: ptr.Of("openshift"),
+							Platform: ptr.To("openshift"),
 						},
 						Pilot: &v1.PilotConfig{}, // CNI not configured
 					},
@@ -328,7 +328,7 @@ func TestDependsOnZTunnel(t *testing.T) {
 			rev: &v1.IstioRevision{
 				Spec: v1.IstioRevisionSpec{
 					Values: &v1.Values{
-						Profile: ptr.Of("ambient"),
+						Profile: ptr.To("ambient"),
 					},
 				},
 			},
@@ -340,7 +340,7 @@ func TestDependsOnZTunnel(t *testing.T) {
 			rev: &v1.IstioRevision{
 				Spec: v1.IstioRevisionSpec{
 					Values: &v1.Values{
-						Profile: ptr.Of("default"),
+						Profile: ptr.To("default"),
 					},
 				},
 			},
@@ -352,7 +352,7 @@ func TestDependsOnZTunnel(t *testing.T) {
 			rev: &v1.IstioRevision{
 				Spec: v1.IstioRevisionSpec{
 					Values: &v1.Values{
-						Profile: ptr.Of("ambient"),
+						Profile: ptr.To("ambient"),
 						Pilot: &v1.PilotConfig{
 							Env: map[string]string{
 								"PILOT_ENABLE_AMBIENT": "true",
@@ -369,7 +369,7 @@ func TestDependsOnZTunnel(t *testing.T) {
 			rev: &v1.IstioRevision{
 				Spec: v1.IstioRevisionSpec{
 					Values: &v1.Values{
-						Profile: ptr.Of(""),
+						Profile: ptr.To(""),
 					},
 				},
 			},

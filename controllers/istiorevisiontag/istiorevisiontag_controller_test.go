@@ -31,7 +31,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/client/interceptor"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 const revName = "istio-revision"
@@ -210,7 +210,7 @@ func TestDetermineInUseCondition(t *testing.T) {
 				if tc.enableAllNamespaces {
 					rev.Spec.Values = &v1.Values{
 						SidecarInjectorWebhook: &v1.SidecarInjectorConfig{
-							EnableNamespacesByDefault: ptr.Of(true),
+							EnableNamespacesByDefault: ptr.To(true),
 						},
 					}
 				}
@@ -326,7 +326,7 @@ func TestValidation(t *testing.T) {
 					},
 					Spec: v1.IstioRevisionSpec{
 						Values: &v1.Values{
-							Profile: ptr.Of("remote"),
+							Profile: ptr.To("remote"),
 						},
 					},
 				},

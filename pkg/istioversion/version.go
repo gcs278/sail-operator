@@ -25,7 +25,7 @@ import (
 	"github.com/istio-ecosystem/sail-operator/pkg/env"
 	"gopkg.in/yaml.v3"
 
-	"istio.io/istio/pkg/log"
+	"log/slog"
 )
 
 var (
@@ -90,7 +90,7 @@ func init() {
 	if versionsFilename == "" {
 		versionsFilename = env.Get("VERSIONS_YAML_FILE", "versions.yaml")
 	}
-	log.Info("loading supported istio versions from " + versionsFilename)
+	slog.Info("loading supported istio versions from " + versionsFilename)
 	// Read the embedded versions.yaml file
 	data, err := versionsFiles.ReadFile(versionsFilename)
 	if err != nil {

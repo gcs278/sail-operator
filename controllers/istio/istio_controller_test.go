@@ -37,7 +37,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/client/interceptor"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 var (
@@ -241,8 +241,8 @@ func TestDetermineStatus(t *testing.T) {
 		Kind:               v1.IstioKind,
 		Name:               istioName,
 		UID:                istioUID,
-		Controller:         ptr.Of(true),
-		BlockOwnerDeletion: ptr.Of(true),
+		Controller:         ptr.To(true),
+		BlockOwnerDeletion: ptr.To(true),
 	}
 
 	ownedByAnotherIstio := metav1.OwnerReference{
@@ -250,8 +250,8 @@ func TestDetermineStatus(t *testing.T) {
 		Kind:               v1.IstioKind,
 		Name:               "some-other-Istio",
 		UID:                "some-other-uid",
-		Controller:         ptr.Of(true),
-		BlockOwnerDeletion: ptr.Of(true),
+		Controller:         ptr.To(true),
+		BlockOwnerDeletion: ptr.To(true),
 	}
 
 	revision := func(name string, ownerRef metav1.OwnerReference, reconciled, ready, inUse bool) v1.IstioRevision {
@@ -818,19 +818,19 @@ func TestGetActiveRevisionName(t *testing.T) {
 		{
 			name:                 "InPlace",
 			version:              "1.0.0",
-			updateStrategyType:   ptr.Of(v1.UpdateStrategyTypeInPlace),
+			updateStrategyType:   ptr.To(v1.UpdateStrategyTypeInPlace),
 			expectedRevisionName: "test-istio",
 		},
 		{
 			name:                 "RevisionBased v1.0.0",
 			version:              "1.0.0",
-			updateStrategyType:   ptr.Of(v1.UpdateStrategyTypeRevisionBased),
+			updateStrategyType:   ptr.To(v1.UpdateStrategyTypeRevisionBased),
 			expectedRevisionName: "test-istio-1-0-0",
 		},
 		{
 			name:                 "RevisionBased v2.0.0",
 			version:              "2.0.0",
-			updateStrategyType:   ptr.Of(v1.UpdateStrategyTypeRevisionBased),
+			updateStrategyType:   ptr.To(v1.UpdateStrategyTypeRevisionBased),
 			expectedRevisionName: "test-istio-2-0-0",
 		},
 	}
@@ -883,14 +883,14 @@ func TestGetPruningGracePeriod(t *testing.T) {
 		{
 			name: "Grace period less than minimum",
 			updateStrategy: &v1.IstioUpdateStrategy{
-				InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(v1.MinRevisionDeletionGracePeriodSeconds - 10)),
+				InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(v1.MinRevisionDeletionGracePeriodSeconds - 10)),
 			},
 			expected: v1.MinRevisionDeletionGracePeriodSeconds * time.Second,
 		},
 		{
 			name: "Grace period more than minimum",
 			updateStrategy: &v1.IstioUpdateStrategy{
-				InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(v1.MinRevisionDeletionGracePeriodSeconds + 10)),
+				InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(v1.MinRevisionDeletionGracePeriodSeconds + 10)),
 			},
 			expected: (v1.MinRevisionDeletionGracePeriodSeconds + 10) * time.Second,
 		},

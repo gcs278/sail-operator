@@ -33,7 +33,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 var _ = Describe("CNI Dependency", Ordered, func() {
@@ -97,7 +97,7 @@ var _ = Describe("CNI Dependency", Ordered, func() {
 						Values: &v1.Values{
 							Pilot: &v1.PilotConfig{
 								Cni: &v1.CNIUsageConfig{
-									Enabled: ptr.Of(true),
+									Enabled: ptr.To(true),
 								},
 							},
 						},
@@ -259,7 +259,7 @@ var _ = Describe("CNI Dependency", Ordered, func() {
 						Values: &v1.Values{
 							Pilot: &v1.PilotConfig{
 								Cni: &v1.CNIUsageConfig{
-									Enabled: ptr.Of(false),
+									Enabled: ptr.To(false),
 								},
 							},
 						},

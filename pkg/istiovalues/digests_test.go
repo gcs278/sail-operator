@@ -21,7 +21,7 @@ import (
 	v1 "github.com/istio-ecosystem/sail-operator/api/v1"
 	"github.com/istio-ecosystem/sail-operator/pkg/config"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 func TestApplyImageDigests(t *testing.T) {
@@ -40,12 +40,12 @@ func TestApplyImageDigests(t *testing.T) {
 			version: "v1.20.0",
 			inputValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Image: ptr.Of("istiod-test"),
+					Image: ptr.To("istiod-test"),
 				},
 			},
 			expectValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Image: ptr.Of("istiod-test"),
+					Image: ptr.To("istiod-test"),
 				},
 			},
 		},
@@ -64,14 +64,14 @@ func TestApplyImageDigests(t *testing.T) {
 			inputValues: &v1.Values{},
 			expectValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Image: ptr.Of("istiod-test"),
+					Image: ptr.To("istiod-test"),
 				},
 				Global: &v1.GlobalConfig{
 					Proxy: &v1.ProxyConfig{
-						Image: ptr.Of("proxy-test"),
+						Image: ptr.To("proxy-test"),
 					},
 					ProxyInit: &v1.ProxyInitConfig{
-						Image: ptr.Of("proxy-test"),
+						Image: ptr.To("proxy-test"),
 					},
 				},
 				// ZTunnel: &v1.ZTunnelConfig{
@@ -93,19 +93,19 @@ func TestApplyImageDigests(t *testing.T) {
 			version: "v1.20.0",
 			inputValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Image: ptr.Of("istiod-custom"),
+					Image: ptr.To("istiod-custom"),
 				},
 			},
 			expectValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Image: ptr.Of("istiod-custom"),
+					Image: ptr.To("istiod-custom"),
 				},
 				Global: &v1.GlobalConfig{
 					Proxy: &v1.ProxyConfig{
-						Image: ptr.Of("proxy-test"),
+						Image: ptr.To("proxy-test"),
 					},
 					ProxyInit: &v1.ProxyInitConfig{
-						Image: ptr.Of("proxy-test"),
+						Image: ptr.To("proxy-test"),
 					},
 				},
 				// ZTunnel: &v1.ZTunnelConfig{
@@ -127,21 +127,21 @@ func TestApplyImageDigests(t *testing.T) {
 			version: "v1.20.0",
 			inputValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Hub: ptr.Of("docker.io/istio"),
-					Tag: ptr.Of("1.20.1"),
+					Hub: ptr.To("docker.io/istio"),
+					Tag: ptr.To("1.20.1"),
 				},
 			},
 			expectValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Hub: ptr.Of("docker.io/istio"),
-					Tag: ptr.Of("1.20.1"),
+					Hub: ptr.To("docker.io/istio"),
+					Tag: ptr.To("1.20.1"),
 				},
 				Global: &v1.GlobalConfig{
 					Proxy: &v1.ProxyConfig{
-						Image: ptr.Of("proxy-test"),
+						Image: ptr.To("proxy-test"),
 					},
 					ProxyInit: &v1.ProxyInitConfig{
-						Image: ptr.Of("proxy-test"),
+						Image: ptr.To("proxy-test"),
 					},
 				},
 				// ZTunnel: &v1.ZTunnelConfig{
@@ -163,14 +163,14 @@ func TestApplyImageDigests(t *testing.T) {
 			version: "v1.20.1",
 			inputValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Hub: ptr.Of("docker.io/istio"),
-					Tag: ptr.Of("1.20.2"),
+					Hub: ptr.To("docker.io/istio"),
+					Tag: ptr.To("1.20.2"),
 				},
 			},
 			expectValues: &v1.Values{
 				Pilot: &v1.PilotConfig{
-					Hub: ptr.Of("docker.io/istio"),
-					Tag: ptr.Of("1.20.2"),
+					Hub: ptr.To("docker.io/istio"),
+					Tag: ptr.To("1.20.2"),
 				},
 			},
 		},
@@ -188,12 +188,12 @@ func TestApplyImageDigests(t *testing.T) {
 			version: "v1.20.0",
 			inputValues: &v1.Values{
 				Global: &v1.GlobalConfig{
-					Hub: ptr.Of("docker.io/istio"),
+					Hub: ptr.To("docker.io/istio"),
 				},
 			},
 			expectValues: &v1.Values{
 				Global: &v1.GlobalConfig{
-					Hub: ptr.Of("docker.io/istio"),
+					Hub: ptr.To("docker.io/istio"),
 				},
 			},
 		},
@@ -211,12 +211,12 @@ func TestApplyImageDigests(t *testing.T) {
 			version: "v1.20.0",
 			inputValues: &v1.Values{
 				Global: &v1.GlobalConfig{
-					Tag: ptr.Of("1.20.0-custom-build"),
+					Tag: ptr.To("1.20.0-custom-build"),
 				},
 			},
 			expectValues: &v1.Values{
 				Global: &v1.GlobalConfig{
-					Tag: ptr.Of("1.20.0-custom-build"),
+					Tag: ptr.To("1.20.0-custom-build"),
 				},
 			},
 		},

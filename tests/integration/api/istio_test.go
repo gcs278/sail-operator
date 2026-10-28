@@ -34,7 +34,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 var _ = Describe("Istio resource", Ordered, func() {
@@ -89,7 +89,7 @@ var _ = Describe("Istio resource", Ordered, func() {
 					Namespace: istioNamespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							IstioNamespace: ptr.Of("wrong-namespace"),
+							IstioNamespace: ptr.To("wrong-namespace"),
 						},
 					},
 				},
@@ -110,13 +110,13 @@ var _ = Describe("Istio resource", Ordered, func() {
 					Namespace: istioNamespace,
 					UpdateStrategy: &v1.IstioUpdateStrategy{
 						Type: v1.UpdateStrategyTypeInPlace,
-						InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+						InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 					},
 					Values: &v1.Values{
 						Pilot: &v1.PilotConfig{
-							Image: ptr.Of(pilotImage),
+							Image: ptr.To(pilotImage),
 							Cni: &v1.CNIUsageConfig{
-								Enabled: ptr.Of(true),
+								Enabled: ptr.To(true),
 							},
 						},
 					},
@@ -145,17 +145,17 @@ var _ = Describe("Istio resource", Ordered, func() {
 				Namespace: istio.Spec.Namespace,
 				Values: &v1.Values{
 					Global: &v1.GlobalConfig{
-						ConfigValidation: ptr.Of(true),
+						ConfigValidation: ptr.To(true),
 						IstioNamespace:   &istio.Spec.Namespace,
 					},
 					Pilot: &v1.PilotConfig{
-						Image: ptr.Of(pilotImage),
+						Image: ptr.To(pilotImage),
 						Cni: &v1.CNIUsageConfig{
-							Enabled: ptr.Of(true),
+							Enabled: ptr.To(true),
 						},
 					},
 					Revision:        &revKey.Name,
-					DefaultRevision: ptr.Of(""), // set in the default profile
+					DefaultRevision: ptr.To(""), // set in the default profile
 				},
 			}))
 		})
@@ -221,17 +221,17 @@ var _ = Describe("Istio resource", Ordered, func() {
 					Namespace: istio.Spec.Namespace,
 					Values: &v1.Values{
 						Global: &v1.GlobalConfig{
-							ConfigValidation: ptr.Of(true),
+							ConfigValidation: ptr.To(true),
 							IstioNamespace:   &istio.Spec.Namespace,
 						},
 						Pilot: &v1.PilotConfig{
-							Image: ptr.Of(pilotImage),
+							Image: ptr.To(pilotImage),
 							Cni: &v1.CNIUsageConfig{
-								Enabled: ptr.Of(true),
+								Enabled: ptr.To(true),
 							},
 						},
 						Revision:        &revKey.Name,
-						DefaultRevision: ptr.Of(""), // set in the default profile
+						DefaultRevision: ptr.To(""), // set in the default profile
 					},
 				}))
 			})
@@ -300,7 +300,7 @@ var _ = Describe("Istio resource", Ordered, func() {
 								Namespace: istioNamespace,
 								UpdateStrategy: &v1.IstioUpdateStrategy{
 									Type: v1.UpdateStrategyTypeInPlace,
-									InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+									InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 								},
 							},
 						}
@@ -395,7 +395,7 @@ var _ = Describe("Istio resource", Ordered, func() {
 								Namespace: istioNamespace,
 								UpdateStrategy: &v1.IstioUpdateStrategy{
 									Type: v1.UpdateStrategyTypeRevisionBased,
-									InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+									InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 								},
 							},
 						}

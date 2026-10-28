@@ -26,7 +26,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 func TestPruneInactive(t *testing.T) {
@@ -43,8 +43,8 @@ func TestPruneInactive(t *testing.T) {
 		Kind:               v1.IstioKind,
 		Name:               istioName,
 		UID:                istioUID,
-		Controller:         ptr.Of(true),
-		BlockOwnerDeletion: ptr.Of(true),
+		Controller:         ptr.To(true),
+		BlockOwnerDeletion: ptr.To(true),
 	}
 
 	ownedByAnotherIstio := metav1.OwnerReference{
@@ -52,8 +52,8 @@ func TestPruneInactive(t *testing.T) {
 		Kind:               v1.IstioKind,
 		Name:               "some-other-Istio",
 		UID:                "some-other-uid",
-		Controller:         ptr.Of(true),
-		BlockOwnerDeletion: ptr.Of(true),
+		Controller:         ptr.To(true),
+		BlockOwnerDeletion: ptr.To(true),
 	}
 
 	tenSecondsAgo := metav1.Time{Time: time.Now().Add(-10 * time.Second)}
@@ -102,7 +102,7 @@ func TestPruneInactive(t *testing.T) {
 				LastTransitionTime: tenSecondsAgo,
 			},
 			expectDeletion:     false,
-			expectRequeueAfter: ptr.Of((v1.DefaultRevisionDeletionGracePeriodSeconds - 10) * time.Second),
+			expectRequeueAfter: ptr.To((v1.DefaultRevisionDeletionGracePeriodSeconds - 10) * time.Second),
 		},
 		{
 			name:           "preserves IstioRevision owned by a different Istio",
@@ -170,7 +170,7 @@ func TestPruneInactive(t *testing.T) {
 				},
 			},
 			expectDeletion:     true,
-			expectRequeueAfter: ptr.Of((v1.DefaultRevisionDeletionGracePeriodSeconds - 25) * time.Second),
+			expectRequeueAfter: ptr.To((v1.DefaultRevisionDeletionGracePeriodSeconds - 25) * time.Second),
 		},
 		{
 			name:           "preserves non-active IstioRevision with unknown usage status",

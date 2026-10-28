@@ -25,7 +25,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
-	"istio.io/istio/pkg/util/sets"
+	"k8s.io/apimachinery/pkg/util/sets"
 )
 
 const conflictRequeueDelay = 2 * time.Second

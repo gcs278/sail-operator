@@ -49,7 +49,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 const (
@@ -189,8 +189,8 @@ func (r *Reconciler) installHelmCharts(ctx context.Context, tag *v1.IstioRevisio
 		Kind:               v1.IstioRevisionTagKind,
 		Name:               tag.Name,
 		UID:                tag.UID,
-		Controller:         ptr.Of(true),
-		BlockOwnerDeletion: ptr.Of(true),
+		Controller:         ptr.To(true),
+		BlockOwnerDeletion: ptr.To(true),
 	}
 
 	values := helm.FromValues(rev.Spec.Values)

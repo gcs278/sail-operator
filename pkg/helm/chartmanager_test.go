@@ -29,7 +29,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/rand"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 var ctx = context.TODO()
@@ -44,7 +44,7 @@ var (
 		Kind:       "Istio",
 		Name:       "my-istio",
 		UID:        "1234",
-		Controller: ptr.Of(true),
+		Controller: ptr.To(true),
 	}
 
 	tests = []struct {

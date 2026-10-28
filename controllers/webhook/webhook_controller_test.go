@@ -46,7 +46,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/client/interceptor"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 var ctx = context.Background()
@@ -467,7 +467,7 @@ func TestIsOwnedByRevisionWithRemoteControlPlane(t *testing.T) {
 					},
 					Spec: v1.IstioRevisionSpec{
 						Values: &v1.Values{
-							Profile: ptr.Of("remote"),
+							Profile: ptr.To("remote"),
 						},
 					},
 				},
@@ -507,7 +507,7 @@ func TestGetReadinessProbeURL(t *testing.T) {
 		{
 			name: "URL",
 			config: admissionv1.WebhookClientConfig{
-				URL: ptr.Of("https://some.url"),
+				URL: ptr.To("https://some.url"),
 			},
 			expectErr: true,
 		},
@@ -532,7 +532,7 @@ func TestGetReadinessProbeURL(t *testing.T) {
 				Service: &admissionv1.ServiceReference{
 					Name:      "istiod",
 					Namespace: "istio-system",
-					Port:      ptr.Of(int32(123)),
+					Port:      ptr.To(int32(123)),
 				},
 			},
 			expectURL: "https://istiod.istio-system.svc:123/ready",
@@ -543,7 +543,7 @@ func TestGetReadinessProbeURL(t *testing.T) {
 				Service: &admissionv1.ServiceReference{
 					Name:      "istiod",
 					Namespace: "istio-system",
-					Path:      ptr.Of("/some/path"),
+					Path:      ptr.To("/some/path"),
 				},
 			},
 			expectURL: "https://istiod.istio-system.svc:443/ready",

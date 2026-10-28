@@ -25,7 +25,7 @@ import (
 	"gopkg.in/yaml.v3"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 
-	"istio.io/istio/pkg/util/sets"
+	"k8s.io/apimachinery/pkg/util/sets"
 )
 
 // ApplyProfilesAndPlatform loads profiles from an fs.FS and applies them with platform settings.
@@ -76,7 +76,7 @@ func getValuesFromProfiles(resourceFS fs.FS, profilesDir string, profiles []stri
 		if profile == "" {
 			return nil, reconciler.NewValidationError("profile name cannot be empty")
 		}
-		if alreadyApplied.Contains(profile) {
+		if alreadyApplied.Has(profile) {
 			continue
 		}
 		alreadyApplied.Insert(profile)

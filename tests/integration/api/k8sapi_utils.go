@@ -20,7 +20,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 func NewOwnerReference(obj client.Object) metav1.OwnerReference {
@@ -52,7 +52,7 @@ func NewOwnerReference(obj client.Object) metav1.OwnerReference {
 		Kind:               kind,
 		Name:               obj.GetName(),
 		UID:                obj.GetUID(),
-		Controller:         ptr.Of(true),
-		BlockOwnerDeletion: ptr.Of(true),
+		Controller:         ptr.To(true),
+		BlockOwnerDeletion: ptr.To(true),
 	}
 }

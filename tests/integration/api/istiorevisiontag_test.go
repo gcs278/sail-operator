@@ -30,7 +30,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 const (
@@ -116,7 +116,7 @@ var _ = Describe("IstioRevisionTag resource", Label("istiorevisiontag"), Ordered
 							Namespace: istioRevisionTagNamespace,
 							UpdateStrategy: &v1.IstioUpdateStrategy{
 								Type: updateStrategy,
-								InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+								InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 							},
 						},
 					}
@@ -228,7 +228,7 @@ var _ = Describe("IstioRevisionTag resource", Label("istiorevisiontag"), Ordered
 					Namespace: istioRevisionTagNamespace,
 					UpdateStrategy: &v1.IstioUpdateStrategy{
 						Type: v1.UpdateStrategyTypeInPlace,
-						InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+						InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 					},
 				},
 			}
@@ -242,7 +242,7 @@ var _ = Describe("IstioRevisionTag resource", Label("istiorevisiontag"), Ordered
 					Namespace: istioRevisionTagNamespace,
 					UpdateStrategy: &v1.IstioUpdateStrategy{
 						Type: v1.UpdateStrategyTypeInPlace,
-						InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+						InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 					},
 				},
 			}
@@ -330,7 +330,7 @@ var _ = Describe("IstioRevisionTag resource", Label("istiorevisiontag"), Ordered
 						Namespace: istioRevisionTagNamespace,
 						UpdateStrategy: &v1.IstioUpdateStrategy{
 							Type: v1.UpdateStrategyTypeInPlace,
-							InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+							InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 						},
 					},
 				}
@@ -361,7 +361,7 @@ var _ = Describe("IstioRevisionTag resource", Label("istiorevisiontag"), Ordered
 					Namespace: istioRevisionTagNamespace,
 					UpdateStrategy: &v1.IstioUpdateStrategy{
 						Type: v1.UpdateStrategyTypeInPlace,
-						InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+						InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 					},
 				},
 			}
@@ -376,7 +376,7 @@ var _ = Describe("IstioRevisionTag resource", Label("istiorevisiontag"), Ordered
 					Namespace: workloadNamespace,
 					UpdateStrategy: &v1.IstioUpdateStrategy{
 						Type: v1.UpdateStrategyTypeInPlace,
-						InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+						InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 					},
 				},
 			}
@@ -419,7 +419,7 @@ var _ = Describe("IstioRevisionTag resource", Label("istiorevisiontag"), Ordered
 					Namespace: istioRevisionTagNamespace,
 					UpdateStrategy: &v1.IstioUpdateStrategy{
 						Type: v1.UpdateStrategyTypeInPlace,
-						InactiveRevisionDeletionGracePeriodSeconds: ptr.Of(int64(gracePeriod.Seconds())),
+						InactiveRevisionDeletionGracePeriodSeconds: ptr.To(int64(gracePeriod.Seconds())),
 					},
 				},
 			}

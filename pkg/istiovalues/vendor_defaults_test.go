@@ -23,7 +23,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v3"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 func TestApplyVendorDefaults(t *testing.T) {
@@ -63,7 +63,7 @@ v1.24.2:
 			},
 			istioCniPostValues: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					CniConfDir: ptr.Of("example/path"),
+					CniConfDir: ptr.To("example/path"),
 				},
 			},
 			expectedIstioError:    false,
@@ -88,7 +88,7 @@ v1.24.2:
 				},
 				MeshConfig: &v1.MeshConfig{
 					LocalityLbSetting: &v1.LocalityLoadBalancerSetting{
-						Enabled: ptr.Of(true),
+						Enabled: ptr.To(true),
 					},
 				},
 			},
@@ -102,7 +102,7 @@ v1.24.2:
 				},
 				MeshConfig: &v1.MeshConfig{
 					LocalityLbSetting: &v1.LocalityLoadBalancerSetting{
-						Enabled: ptr.Of(true),
+						Enabled: ptr.To(true),
 					},
 				},
 			},
@@ -125,7 +125,7 @@ v1.24.2:
 			istoPostValues:    &v1.Values{},
 			istioCniPostValues: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					CniConfDir: ptr.Of("example/path"),
+					CniConfDir: ptr.To("example/path"),
 				},
 			},
 			expectedIstioError:    false,

@@ -36,7 +36,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 var _ = Describe("Control Plane Installation", Label("smoke", "control-plane", "slow"), Ordered, func() {
@@ -134,7 +134,7 @@ metadata:
 					})
 
 					It("doesn't continuously reconcile the IstioCNI CR", func() {
-						Eventually(k.WithNamespace(namespace).Logs).WithArguments("deploy/"+deploymentName, ptr.Of(30*time.Second)).
+						Eventually(k.WithNamespace(namespace).Logs).WithArguments("deploy/"+deploymentName, ptr.To(30*time.Second)).
 							ShouldNot(ContainSubstring("Reconciliation done"), "IstioCNI is continuously reconciling")
 						Success("IstioCNI stopped reconciling")
 					})
@@ -164,7 +164,7 @@ metadata:
 					})
 
 					It("doesn't continuously reconcile the Istio CR", func() {
-						Eventually(k.WithNamespace(namespace).Logs).WithArguments("deploy/"+deploymentName, ptr.Of(30*time.Second)).
+						Eventually(k.WithNamespace(namespace).Logs).WithArguments("deploy/"+deploymentName, ptr.To(30*time.Second)).
 							ShouldNot(ContainSubstring("Reconciliation done"), "Istio CR is continuously reconciling")
 						Success("Istio CR stopped reconciling")
 					})

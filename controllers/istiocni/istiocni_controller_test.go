@@ -35,7 +35,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/client/interceptor"
 
-	"istio.io/istio/pkg/ptr"
+	"k8s.io/utils/ptr"
 )
 
 func TestValidate(t *testing.T) {
@@ -334,14 +334,14 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: istioversion.Default,
 					Values: &v1.CNIValues{
 						Cni: &v1.CNIConfig{
-							Image: ptr.Of("istiocni-test"),
+							Image: ptr.To("istiocni-test"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					Image: ptr.Of("istiocni-test"),
+					Image: ptr.To("istiocni-test"),
 				},
 			},
 		},
@@ -362,7 +362,7 @@ func TestApplyImageDigests(t *testing.T) {
 			},
 			expectValues: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					Image: ptr.Of("cni-test"),
+					Image: ptr.To("cni-test"),
 				},
 			},
 		},
@@ -380,14 +380,14 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: istioversion.Default,
 					Values: &v1.CNIValues{
 						Cni: &v1.CNIConfig{
-							Image: ptr.Of("cni-custom"),
+							Image: ptr.To("cni-custom"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					Image: ptr.Of("cni-custom"),
+					Image: ptr.To("cni-custom"),
 				},
 			},
 		},
@@ -405,16 +405,16 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: istioversion.Default,
 					Values: &v1.CNIValues{
 						Cni: &v1.CNIConfig{
-							Hub: ptr.Of("docker.io/istio"),
-							Tag: ptr.Of("1.20.1"),
+							Hub: ptr.To("docker.io/istio"),
+							Tag: ptr.To("1.20.1"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					Hub: ptr.Of("docker.io/istio"),
-					Tag: ptr.Of("1.20.1"),
+					Hub: ptr.To("docker.io/istio"),
+					Tag: ptr.To("1.20.1"),
 				},
 			},
 		},
@@ -432,14 +432,14 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: istioversion.Default,
 					Values: &v1.CNIValues{
 						Global: &v1.CNIGlobalConfig{
-							Hub: ptr.Of("docker.io/istio"),
+							Hub: ptr.To("docker.io/istio"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.CNIValues{
 				Global: &v1.CNIGlobalConfig{
-					Hub: ptr.Of("docker.io/istio"),
+					Hub: ptr.To("docker.io/istio"),
 				},
 			},
 		},
@@ -457,14 +457,14 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: istioversion.Default,
 					Values: &v1.CNIValues{
 						Global: &v1.CNIGlobalConfig{
-							Tag: ptr.Of("v1.24.0-custom-build"),
+							Tag: ptr.To("v1.24.0-custom-build"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.CNIValues{
 				Global: &v1.CNIGlobalConfig{
-					Tag: ptr.Of("v1.24.0-custom-build"),
+					Tag: ptr.To("v1.24.0-custom-build"),
 				},
 			},
 		},
@@ -482,16 +482,16 @@ func TestApplyImageDigests(t *testing.T) {
 					Version: istioversion.Default,
 					Values: &v1.CNIValues{
 						Cni: &v1.CNIConfig{
-							Hub: ptr.Of("docker.io/istio"),
-							Tag: ptr.Of("1.20.2"),
+							Hub: ptr.To("docker.io/istio"),
+							Tag: ptr.To("1.20.2"),
 						},
 					},
 				},
 			},
 			expectValues: &v1.CNIValues{
 				Cni: &v1.CNIConfig{
-					Hub: ptr.Of("docker.io/istio"),
-					Tag: ptr.Of("1.20.2"),
+					Hub: ptr.To("docker.io/istio"),
+					Tag: ptr.To("1.20.2"),
 				},
 			},
 		},
